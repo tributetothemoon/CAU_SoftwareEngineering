@@ -12,13 +12,15 @@ public class BookDatabase {
 	public static String get_title(Book book) {return book.title;}
 	public static String get_author(Book book) {return book.author;}
 	public static String get_publisher(Book book) {return book.publisher;}
-	public static String get_state(Book book) {return book.state;}
+	public static int get_published_year(Book book) {return book.published_year;}
+	public static int get_price(Book book) {return book.price;}
+	public static String get_condition(Book book) {return book.condition;}
 	public static User get_seller(Book book) {return book.seller;}
 	
 	public static void upload_book(String title, int ISBN, String author, String publisher, 
-			int publication_year, int price, String state, User seller) {
+			int published_year, int price, String condition, User seller) {
 		bookList.add(new Book(title, ISBN, author, publisher, 
-				publication_year, price, state, seller));
+				published_year, price, condition, seller));
 	}
 	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id) {
 		ArrayList<Object> result = new ArrayList<>();		
@@ -40,11 +42,16 @@ public class BookDatabase {
 		else return null;
 	}
 	
-	public static ArrayList<Book> search_ISBN(int ISBN){
-		ArrayList<Book> result = new ArrayList<>();
-		for(Book cur : bookList) if(cur.ISBN == ISBN) result.add(cur);
-		
-		if(result.isEmpty()) return null;
-		else return result;
+	public static void modify_book(Book book, String title, int ISBN, String author, String publisher, int published_year, int price, String condition) {
+		if(title != null) book.title = title;
+		if(ISBN != 0) book.ISBN = 0;
+		if(author != null) book.author = author;
+		if(publisher != null) book.publisher = publisher;
+		if(published_year != 0) book.published_year = published_year;
+		if(price != 0) book.price = price;
+		if(condition != null) book.condition = condition;
 	}
+	
+	public static void delete_book(Book book) {bookList.remove(book);}
+	
 }
