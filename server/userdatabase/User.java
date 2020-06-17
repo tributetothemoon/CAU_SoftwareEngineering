@@ -1,6 +1,6 @@
-package userdatabase;
+package server.userdatabase;
 import java.util.ArrayList;
-import bookdatabase.Book;
+import server.bookdatabase.Book;
 
 public class User {
 	String id;

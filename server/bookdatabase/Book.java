@@ -1,6 +1,5 @@
-package bookdatabase;
-
-import userdatabase.User;
+package server.bookdatabase;
+import server.userdatabase.User;
 
 public class Book{
 	String title;

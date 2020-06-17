@@ -1,10 +1,11 @@
-package bookdatabase;
+package server.bookdatabase;
 import java.util.ArrayList;
-import userdatabase.User;
+import server.Server;
+import server.userdatabase.User;
 
 public class BookDatabase {
 	
-	static ArrayList<Book> bookList;
+	public static ArrayList<Book> bookList;
 	
 	public static void initialize() {bookList = new ArrayList<>();}
 	public static int get_ISBN(Book book) {return book.ISBN;}
@@ -19,13 +20,24 @@ public class BookDatabase {
 		bookList.add(new Book(title, ISBN, author, publisher, 
 				publication_year, price, state, seller));
 	}
-	public static ArrayList<Book> search_book(String title, int ISBN, String author, String seller_id) {
-		ArrayList<Book> result = new ArrayList<>();
-		if(title != null) for(Book book_title : bookList) if(book_title.title.equals(title)) result.add(book_title);
-		else if(ISBN != 0) for(Book book_ISBN : bookList) if(book_ISBN.ISBN == ISBN) result.add(book_ISBN);
-		else if(author != null) for(Book book_author : bookList) if(book_author.author.equals(title)) result.add(book_author);
+	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id) {
+		ArrayList<Object> result = new ArrayList<>();		
 		
-		return null;
+		if(title != null) {
+			for(Book book_title : bookList) if(book_title.title.equals(title)) result.add((Object)book_title);
+		}
+		else if(ISBN != 0) {
+			for(Book book_ISBN : bookList) if(book_ISBN.ISBN == ISBN) result.add(book_ISBN);
+		}
+		else if(author != null) {
+			for(Book book_author : bookList) if(book_author.author.equals(author)) result.add(book_author);
+		}
+		else if(seller_id != null) for(Book book_seller_id : bookList) {
+			if(Server.get_id(book_seller_id.seller).equals(seller_id)) result.add(book_seller_id);
+		}
+		
+		if(result.size() != 0) return result;
+		else return null;
 	}
 	
 	public static ArrayList<Book> search_ISBN(int ISBN){

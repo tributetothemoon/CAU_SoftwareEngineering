@@ -1,4 +1,4 @@
-package userdatabase;
+package server.userdatabase;
 import java.util.ArrayList;
 
 public class UserDatabase {
@@ -15,6 +15,7 @@ public class UserDatabase {
 		userList = new ArrayList<>();
 		admin_account = new User("admin", "nayana", "administrator", "None", "None");
 		userList.add(admin_account);
+		userList.add(new User("kkm733", "rlans8010", "kimoon", "010-8606-5884", "moon_hf@naver.com"));
 	}
 	
 	public static boolean register(String id, String password, String name, String phone, String email) {

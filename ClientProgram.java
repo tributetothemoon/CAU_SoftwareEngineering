@@ -1,16 +1,15 @@
 import java.util.Scanner;
 import java.util.ArrayList;
-import bookdatabase.Book;
-import userdatabase.User;
-
+import server.*;
+import server.bookdatabase.BookDatabase;
 
 enum state {TERMINATING, STARTUP, LOGGEDIN, ADMIN}
 
 public class ClientProgram {
 	private static final int NULL = 0;
 	static Scanner scan;
-	static User account;
-	static ArrayList<Book> displayBookList;
+	static Object account;
+	static ArrayList<Object> bookList;
 	static state program_state;
 	
 	public static void clear() {for(int i = 0; i < 50; i++) System.out.println();}
@@ -128,7 +127,8 @@ public class ClientProgram {
 			if(!buffer.equals("")) ISBN = Integer.parseInt(buffer);
 			
 			System.out.print("State? 1. Excellent / 2. Good / 3. Fair (Type enter to skip)\n");
-			while(0 == select && 3 < select) {
+			while(0 == select || 3 < select) {
+				
 				System.out.print("Select : ");
 				buffer = scan.nextLine();
 				
@@ -158,6 +158,7 @@ public class ClientProgram {
 		String seller = null;
 		int ISBN = NULL;
 		int menu = 0;
+		String buffer;
 		
 		System.out.println("Keyword for search");
 		System.out.println("1. Title");
@@ -165,22 +166,38 @@ public class ClientProgram {
 		System.out.println("3. ISBN");
 		System.out.println("4. Seller's ID");
 		System.out.println("0. Quit");
+		System.out.print("Select : ");
 		
 		try {
+			
 			menu = scan.nextInt();
+			scan.nextLine();	//clear buffer
+			System.out.print("Keyword : ");
+			buffer = scan.nextLine();
 			
 			switch(menu) {
-			case 1:	title = scan.nextLine();	break;
-			case 2: author = scan.nextLine();	break;
-			case 3: ISBN = scan.nextInt();		break;
-			case 4: seller = scan.nextLine();	break;
+			case 1:	title = buffer;	break;
+			case 2: author = buffer;	break;
+			case 3: ISBN = Integer.parseInt(buffer);		break;
+			case 4: seller = buffer;	break;
 			default:	break;
 			}
+			
 		}catch(Exception e) {
 			System.out.println("Please type correct number");
 			return;
 		}
-		displayBookList = Server.search_book(title, ISBN, author, seller);
+		
+		bookList = Server.search_book(title, ISBN, author, seller);
+		
+		System.out.println("[Serching Result]");
+		int count = 1;
+		if(bookList!=null)	for(Object cur : bookList) {
+			System.out.printf("[%d]\n", count++);
+			System.out.println("Title : " + Server.get_title(cur));
+			System.out.printf("Seller ID : %s\n", Server.get_seller_id(cur));
+		}
+		else {System.out.println("There's no such a book");}
 	}
 	
 	public static void user_menu() {
