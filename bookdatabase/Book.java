@@ -13,7 +13,7 @@ public class Book{
 	int ISBN;
 	
 	public Book(String title, int ISBN, String author, String publisher, 
-			int publication_year, int price, User seller) {
+			int publication_year, int price, String state, User seller) {
 		this.title = title;
 		this.ISBN = ISBN;
 		this.author = author;
@@ -21,5 +21,6 @@ public class Book{
 		this.publication_year = publication_year;
 		this.price = price;
 		this.seller = seller;
+		this.state = state;
 	}
 }
