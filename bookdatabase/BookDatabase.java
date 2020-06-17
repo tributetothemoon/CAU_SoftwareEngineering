@@ -6,6 +6,13 @@ public class BookDatabase {
 	
 	static ArrayList<Book> bookList;
 	
+	public static void initialize() {bookList = new ArrayList<>();}
+	public static int get_ISBN(Book book) {return book.ISBN;}
+	public static String get_title(Book book) {return book.title;}
+	public static String get_author(Book book) {return book.author;}
+	public static String get_publisher(Book book) {return book.publisher;}
+	public static String get_state(Book book) {return book.state;}
+	
 	public static void upload(String title, int ISBN, String author, String publisher, 
 			int publication_year, int price, User seller) {
 		bookList.add(new Book(title, ISBN, author, publisher, 

@@ -2,7 +2,7 @@ package userdatabase;
 import java.util.ArrayList;
 import bookdatabase.Book;
 
-public class User{
+public class User {
 	String id;
 	String password;
 	String name;
@@ -20,6 +20,4 @@ public class User{
 		this.stock = new ArrayList<>();
 		this.activation = true;
 	}
-	
-	public String get_id() {return this.id;}
 }
