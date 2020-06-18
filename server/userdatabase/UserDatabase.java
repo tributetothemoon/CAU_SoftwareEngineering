@@ -37,4 +37,11 @@ public class UserDatabase {
 			}
 		}throw new Exception("There's no such a account");	//no id in the database
 	}
+	
+	public static ArrayList<Object> query_all_user(){
+		ArrayList<Object> result = new ArrayList<>();
+		for(User cur : userList) result.add(cur);
+		if(result.size() != 0) return result;
+		else return null;
+	}
 }

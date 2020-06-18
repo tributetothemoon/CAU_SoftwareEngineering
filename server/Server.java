@@ -7,16 +7,14 @@ public class Server {
 	public static void initialize() {UserDatabase.initialize();BookDatabase.initialize();}
 	
 	//UserDatabase access
-	
 	//get user information
 	public static String get_id(Object account) {return UserDatabase.get_id((User)account);}
 	public static String get_name(Object account) {return UserDatabase.get_name((User)account);}
 	public static String get_phone(Object account) {return UserDatabase.get_phone((User)account);}
 	public static String get_email(Object account) {return UserDatabase.get_email((User)account);}
+	public static boolean is_admin(Object account) {return UserDatabase.is_admin((User)account);}
 	
 	public static Object login(String id, String password) throws Exception {return UserDatabase.login(id, password);}
-	
-	public static boolean is_admin(Object account) {return UserDatabase.is_admin((User)account);}
 	
 	public static boolean register(String id, String password, String name, String phone, String email) {
 		return UserDatabase.register(id, password, name, phone, email);
@@ -33,6 +31,8 @@ public class Server {
 			return email;
 		}
 	}
+	
+	public static ArrayList<Object> query_all_user(){return UserDatabase.query_all_user();}
 
 	//BookDatabase access
 	
@@ -62,6 +62,7 @@ public class Server {
 		String user_id = UserDatabase.get_id((User)account);
 		return BookDatabase.search_book(null, 0, null, user_id);
 	}
+	public static ArrayList<Object> query_all_book(){return BookDatabase.query_all_book();}
 	
 	public static void modify_book(Object book, String title, int ISBN, String author, String publisher,
 			int published_year, int price, String condition) {

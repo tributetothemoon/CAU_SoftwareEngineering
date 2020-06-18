@@ -54,4 +54,11 @@ public class BookDatabase {
 	
 	public static void delete_book(Book book) {bookList.remove(book);}
 	
+	public static ArrayList<Object> query_all_book() {
+		ArrayList<Object> result = new ArrayList<>();
+		for(Book cur : bookList) result.add(cur);
+		if(result.size() != 0) return result;
+		else return null;
+	}
+	
 }

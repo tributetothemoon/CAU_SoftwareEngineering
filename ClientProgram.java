@@ -40,6 +40,7 @@ public class ClientProgram {
 	public static void logout() {
 		program_state = state.STARTUP;
 		account = null;
+		bookList = null;
 	}
 	
 	public static void register() {
@@ -77,8 +78,15 @@ public class ClientProgram {
 		System.out.println("2. Register");
 		System.out.println("0. Exit");
 		System.out.printf("Select : ");
+		int menu;
 		
-		int menu = scan.nextInt();
+		try {
+			menu = scan.nextInt();
+		}catch(Exception e) {
+			System.out.println("Please type a proper number");
+			return;
+		}
+		
 		switch(menu){
 			case 1:
 				login();
@@ -183,9 +191,10 @@ public class ClientProgram {
 		System.out.println("0. Quit");
 		System.out.print("Select : ");
 		
-		try {
-			
+		try {			
 			menu = scan.nextInt();
+			if(menu == 0)	return;
+			
 			scan.nextLine();	//clear buffer
 			System.out.print("Keyword : ");
 			buffer = scan.nextLine();
@@ -195,12 +204,10 @@ public class ClientProgram {
 			case 2: author = buffer;	break;
 			case 3: ISBN = Integer.parseInt(buffer);		break;
 			case 4: seller = buffer;	break;
-			case 0: return;
 			default:	break;
 			}
-			
 		}catch(Exception e) {
-			System.out.println("Please type correct number");
+			System.out.println("Please type proper number.");
 			return;
 		}
 		
@@ -208,18 +215,41 @@ public class ClientProgram {
 		
 		System.out.println("[Serching Result]");
 		int index = 1;
-		
-		if(bookList!=null)	for(Object cur : bookList) {
-			System.out.printf("[Index : %d]\n", index++);
-			print_book_info(cur);
-			System.out.println("Seller ID : " + Server.get_seller_id(cur));
-			System.out.println();
-		}
+		if(bookList!=null)
+			for(Object cur : bookList) {
+				System.out.printf("[Index : %d]\n", index++);
+				print_book_info(cur);
+				System.out.println("Seller ID : " + Server.get_seller_id(cur));
+				System.out.println();
+			}
 		else {
 			System.out.println("There's no such a book");
 			return;
 		}
-		send_message();
+		
+		if(Server.is_admin(account)) {
+			System.out.println("[Administrator Menu]");
+			System.out.println("1 : Delete book");
+			System.out.println("0 : Exit");
+			System.out.print("Select : ");
+			try {
+				menu = scan.nextInt();
+			}catch(Exception e) {
+				System.out.println("Please type a proper number.");
+				return;
+			}
+			switch(menu) {
+			case 1:
+				delete_book();
+				break;
+			case 0:
+				break;
+			default:
+				break;
+			}
+		}else {
+			send_message();
+		}
 	}
 	
 	public static void send_message() {
@@ -228,11 +258,14 @@ public class ClientProgram {
 		try {
 			index = scan.nextInt();
 		}catch(Exception e) {
-			System.out.println("Please type correct number");
+			System.out.println("Please type a proper number.");
+			return;
 		}
 		if(index == 0) return;	//exit
-		else if(bookList.size() < index) {System.out.println("Incorrect index"); return;}	//out of index
-		
+		else if(bookList.size() < index) {
+			System.out.println("Inproper index");
+			return;
+		}	//out of index
 		System.out.println("Email has been sended to " + Server.get_seller_id(bookList.get(index-1)) + ", " +  Server.send_message(bookList.get(index - 1)));
 	}
 	
@@ -251,18 +284,17 @@ public class ClientProgram {
 				System.out.println();
 			}
 		}
-		
-		int menu = 0;
-		
+
 		System.out.println("[Menu]");
 		System.out.println("1 : Edit information of book");
 		System.out.println("2 : Delete book");
 		System.out.println("0 : Exit");
 		System.out.print("Select : ");
+		int menu = 0;
 		try {
 			menu = scan.nextInt();
 		}catch(Exception e) {
-			System.out.println("Please type correct number");
+			System.out.println("Please type a proper number.");
 			return;
 		}
 		switch(menu) {
@@ -293,14 +325,14 @@ public class ClientProgram {
 		try {
 			index = scan.nextInt();
 		}catch(Exception e) {
-			System.out.println("Please type correct number");
+			System.out.println("Please type a proper number.");
 		}
 		if(index == 0) return;	//exit
-		else if(bookList.size() < index) {System.out.println("Incorrect index"); return;}	//out of index
+		else if(bookList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
 		
 		Object book = bookList.get(index-1);
 		
-		System.out.println("[information to change]");
+		System.out.println("[Information to change]");
 		System.out.println("1. Title");
 		System.out.println("2. ISBN");
 		System.out.println("3. Author");
@@ -363,19 +395,34 @@ public class ClientProgram {
 		try {
 			index = scan.nextInt();
 		}catch(Exception e) {
-			System.out.println("Please type correct number");
+			System.out.println("Please type proper number.");
 		}
 		if(index == 0) return;	//exit
-		else if(bookList.size() < index) {System.out.println("Incorrect index"); return;}	//out of index
+		else if(bookList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
 		
 		Server.delete_book(bookList.get(index-1));
 		
 	}
 	
+	public static void query_all_user() {
+		ArrayList<Object> userList = Server.query_all_user();
+		
+		int index = 1;
+		for(Object cur : userList) {
+			System.out.printf("[Index : %d]\n", index++);
+			System.out.println("ID : " + Server.get_id(cur));
+			System.out.println("Name : " + Server.get_name(cur));
+			System.out.println("Phone : " + Server.get_phone(cur));
+			System.out.println("e-mail : " + Server.get_email(cur));
+			System.out.println();
+		}
+	}
+	
 	public static void user_menu() {
+
 		System.out.println("[Menu]");
-		System.out.println("1. Upload");
-		System.out.println("2. Search");
+		System.out.println("1. Search");
+		System.out.println("2. Upload");
 		System.out.println("3. Your book for sale");
 		System.out.println("9. Logout");
 		System.out.println("0. Exit program");
@@ -386,21 +433,22 @@ public class ClientProgram {
 		try {
 			menu = scan.nextInt();
 		}catch(Exception e) {
-			System.out.println("Please use correct number to choose menu.");
+			System.out.println("Please type a proper number.");
 			return;
 		}
 		
 		switch(menu){
 		case 1:
-			upload_book();
+			search_book();
 			break;
 		case 2:
-			search_book();
+			upload_book();
 			break;
 		case 3:
 			query_client_book();
 			break;
 		case 9:
+			logout();
 			program_state = state.STARTUP;
 			break;
 		case 0:
@@ -412,10 +460,43 @@ public class ClientProgram {
 	}
 	
 	public static void admin_menu() {
+
+		System.out.println("[Menu]");
+		System.out.println("1. Search");
+		System.out.println("2. Query all users");
+		System.out.println("9. Logout");
+		System.out.println("0. Exit program");
+		System.out.printf("Select : ");
 		
+		int menu;
+		try {
+			menu = scan.nextInt();
+		}catch(Exception e) {
+			System.out.println("Please use proper number to choose menu.");
+			return;
+		}
+		
+		switch(menu){
+		case 1:
+			search_book();
+			break;
+		case 2:
+			query_all_user();
+			break;
+		case 9:
+			logout();
+			program_state = state.STARTUP;
+			break;
+		case 0:
+			program_state = state.TERMINATING;
+			break;
+		default:
+			break;
+		}
 	}
 	
 	public static void main(String[] args) {
+
 		scan = new Scanner(System.in);
 		account = null;
 		program_state = state.STARTUP;
@@ -434,13 +515,11 @@ public class ClientProgram {
 				user_menu();
 				break;
 			case ADMIN:
-				System.out.println("You are a admin!");
-				program_state = state.STARTUP;
+				admin_menu();
 				break;
 			default:
 				break;
 			}
-			
 		}
 		scan.close();
 		System.out.println("The program has been terminated");
