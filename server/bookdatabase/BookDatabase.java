@@ -1,7 +1,5 @@
 package server.bookdatabase;
 import java.util.ArrayList;
-import server.Server;
-import server.userdatabase.User;
 
 public class BookDatabase {
 	
@@ -15,10 +13,10 @@ public class BookDatabase {
 	public static int get_published_year(Book book) {return book.published_year;}
 	public static int get_price(Book book) {return book.price;}
 	public static String get_condition(Book book) {return book.condition;}
-	public static User get_seller(Book book) {return book.seller;}
+	public static String get_seller_id(Book book) {return book.seller_id;}
 	
 	public static void upload_book(String title, int ISBN, String author, String publisher, 
-			int published_year, int price, String condition, User seller) {
+			int published_year, int price, String condition, String seller) {
 		bookList.add(new Book(title, ISBN, author, publisher, 
 				published_year, price, condition, seller));
 	}
@@ -35,7 +33,7 @@ public class BookDatabase {
 			for(Book book_author : bookList) if(book_author.author.equals(author)) result.add(book_author);
 		}
 		else if(seller_id != null) for(Book book_seller_id : bookList) {
-			if(Server.get_id(book_seller_id.seller).equals(seller_id)) result.add(book_seller_id);
+			if(book_seller_id.seller_id.equals(seller_id)) result.add(book_seller_id);
 		}
 		
 		if(result.size() != 0) return result;

@@ -11,6 +11,10 @@ public class UserDatabase {
 	public static String get_email(User account) {return account.email;}
 	public static boolean is_activated(User account) {return account.activation;}
 	public static boolean is_admin(User account) {return admin_account==account;}
+	public static User search_user(String id) {	
+		for(User cur : userList) if(cur.id.equals(id)) return cur;
+		return null;
+	}
 	public static boolean activate(User account) {
 		if(account.activation) return false;
 		else account.activation = true;

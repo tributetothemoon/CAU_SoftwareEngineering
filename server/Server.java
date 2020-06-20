@@ -29,7 +29,8 @@ public class Server {
 	}
 	
 	public static String send_message(Object book) {
-		User seller = BookDatabase.get_seller((Book)book);
+		String seller_id = BookDatabase.get_seller_id((Book)book);
+		User seller = UserDatabase.search_user(seller_id);
 		String email = UserDatabase.get_email(seller);
 		if(email.equals("")) return null;
 		else {
@@ -53,13 +54,13 @@ public class Server {
 	public static int get_price(Object book) {return BookDatabase.get_price((Book)book);}	
 	public static String get_condition(Object book) {return BookDatabase.get_condition((Book)book);}	
 	public static String get_seller_id(Object book) {
-		User seller = BookDatabase.get_seller((Book)book);
-		return UserDatabase.get_id(seller);
+		String seller = BookDatabase.get_seller_id((Book)book);
+		return seller;
 	}
 
 	public static void upload_book(String title, int ISBN, String author, String publisher, 
 			int publication_year, int price, String state, Object seller) {
-		BookDatabase.upload_book(title, ISBN, author, publisher, publication_year, price, state, (User)seller);
+		BookDatabase.upload_book(title, ISBN, author, publisher, publication_year, price, state, get_id((User)seller));
 	}
 	
 	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id) {
