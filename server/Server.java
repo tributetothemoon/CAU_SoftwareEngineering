@@ -12,7 +12,15 @@ public class Server {
 	public static String get_name(Object account) {return UserDatabase.get_name((User)account);}
 	public static String get_phone(Object account) {return UserDatabase.get_phone((User)account);}
 	public static String get_email(Object account) {return UserDatabase.get_email((User)account);}
+	public static boolean is_activated(Object account) {return UserDatabase.is_activated((User)account);}
 	public static boolean is_admin(Object account) {return UserDatabase.is_admin((User)account);}
+	public static boolean activate(Object account) {return UserDatabase.activate((User)account);}
+	public static boolean deactivate(Object account) {return UserDatabase.deactivate((User)account);}
+	public static boolean delete_user(Object account) {
+		if(is_activated(account)) return false;	//account is activated. Cannot delete
+		ArrayList<Object> bookList = query_book(account);
+		if(bookList != null)	for(Object cur : bookList) delete_book(cur);	//
+		return UserDatabase.delete_user((User)account);}
 	
 	public static Object login(String id, String password) throws Exception {return UserDatabase.login(id, password);}
 	

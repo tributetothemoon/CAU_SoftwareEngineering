@@ -423,15 +423,87 @@ public class ClientProgram {
 			System.out.println("Name : " + Server.get_name(cur));
 			System.out.println("Phone : " + Server.get_phone(cur));
 			System.out.println("e-mail : " + Server.get_email(cur));
+			System.out.printf("Account Activation : %s\n", Server.is_activated(cur) ? "Activated" : "Deactivated");
 			System.out.println();
+		}
+		
+		System.out.println("[Menu]");
+		System.out.println("1. Activated user(if deactivated)");
+		System.out.println("2. Deactivated user(if activated)");
+		System.out.println("3. Delete user and books(if deactivated)");
+		System.out.println("0. Quit");
+		System.out.printf("Select : ");
+		 
+		
+		int menu;
+		
+		try {
+			menu = scan.nextInt();
+		}catch(Exception e) {
+			System.out.println("Please use proper number to choose menu.");
+			scan.nextLine();
+			return;
+		}
+		
+		switch(menu){
+		case 1:
+			//activation func
+			System.out.print("Type index of user to activate(0 to exit) : ");
+			try {
+				index = scan.nextInt();
+			}catch(Exception e) {
+				System.out.println("Please type proper number.");
+				scan.nextLine();
+			}
+			if(index == 0) return;	//exit
+			else if(userList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
+			
+			if(Server.activate(userList.get(index-1))) System.out.println("The account has been activated");
+			else System.out.println("Cannot activate. Check user's activation state");
+			
+			break;
+		case 2:
+			//deactivation func
+			System.out.print("Type index of user to deactivate(0 to exit) : ");
+			try {
+				index = scan.nextInt();
+			}catch(Exception e) {
+				System.out.println("Please type proper number.");
+				scan.nextLine();
+			}
+			if(index == 0) return;	//exit
+			else if(userList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
+			
+			if(Server.deactivate(userList.get(index-1))) System.out.println("The account has been deactivated");
+			else System.out.println("Cannot deactivate. Check user's activation state");
+			break;
+		case 3:
+			//delete user and book func
+			System.out.print("Type index of user to delete(0 to exit) : ");
+			try {
+				index = scan.nextInt();
+			}catch(Exception e) {
+				System.out.println("Please type proper number.");
+				scan.nextLine();
+			}
+			if(index == 0) return;	//exit
+			else if(userList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
+			
+			if(Server.delete_user(userList.get(index-1))) System.out.println("The account and it's books have been deleted");
+			else System.out.println("Cannot delete. Check user's activation state");
+			break;
+		case 0:
+			break;
+		default:
+			break;
 		}
 	}
 	
 	public static void user_menu() {
 
 		System.out.println("[Menu]");
-		System.out.println("1. Search");
-		System.out.println("2. Upload");
+		System.out.println("1. Search book");
+		System.out.println("2. Upload book");
 		System.out.println("3. Your book for sale");
 		System.out.println("9. Logout");
 		System.out.println("0. Exit program");
@@ -472,7 +544,7 @@ public class ClientProgram {
 	public static void admin_menu() {
 
 		System.out.println("[Menu]");
-		System.out.println("1. Search");
+		System.out.println("1. Search book");
 		System.out.println("2. Query all users");
 		System.out.println("9. Logout");
 		System.out.println("0. Exit program");

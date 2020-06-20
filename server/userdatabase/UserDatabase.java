@@ -9,7 +9,23 @@ public class UserDatabase {
 	public static String get_name(User account) {return account.name;}
 	public static String get_phone(User account) {return account.phone;}
 	public static String get_email(User account) {return account.email;}
+	public static boolean is_activated(User account) {return account.activation;}
 	public static boolean is_admin(User account) {return admin_account==account;}
+	public static boolean activate(User account) {
+		if(account.activation) return false;
+		else account.activation = true;
+		return true;
+	}
+	public static boolean deactivate(User account) {
+		if(!account.activation) return false;
+		else account.activation = false;
+		return true;
+	}
+	public static boolean delete_user(User account) {
+		if(account.activation) return false;
+		userList.remove(account);
+		return true;
+	}
 	
 	public static void initialize(){
 		userList = new ArrayList<>();
