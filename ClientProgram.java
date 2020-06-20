@@ -84,6 +84,7 @@ public class ClientProgram {
 			menu = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number");
+			scan.nextLine();
 			return;
 		}
 		
@@ -162,7 +163,7 @@ public class ClientProgram {
 				case 1 : condition = "Excellent";	break;
 				case 2 : condition = "Good";		break;
 				case 3 : condition = "Fair";		break;
-				default : System.out.println("Please choose between 1~3");	break;
+				default : System.out.println("Please choose between 1~3");	scan.nextLine();	break;
 				}
 			}
 		}catch(Exception e) {
@@ -208,20 +209,23 @@ public class ClientProgram {
 			}
 		}catch(Exception e) {
 			System.out.println("Please type proper number.");
+			scan.nextLine();
 			return;
 		}
 		
 		bookList = Server.search_book(title, ISBN, author, seller);
 		
-		System.out.println("[Serching Result]");
-		int index = 1;
-		if(bookList!=null)
+		
+		if(bookList!=null) {
+			System.out.println("[Serching Result]");
+			int index = 1;
 			for(Object cur : bookList) {
 				System.out.printf("[Index : %d]\n", index++);
 				print_book_info(cur);
 				System.out.println("Seller ID : " + Server.get_seller_id(cur));
 				System.out.println();
 			}
+		}
 		else {
 			System.out.println("There's no such a book");
 			return;
@@ -236,6 +240,7 @@ public class ClientProgram {
 				menu = scan.nextInt();
 			}catch(Exception e) {
 				System.out.println("Please type a proper number.");
+				scan.nextLine();
 				return;
 			}
 			switch(menu) {
@@ -259,6 +264,7 @@ public class ClientProgram {
 			index = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
+			scan.nextLine();
 			return;
 		}
 		if(index == 0) return;	//exit
@@ -295,6 +301,7 @@ public class ClientProgram {
 			menu = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
+			scan.nextLine();
 			return;
 		}
 		switch(menu) {
@@ -326,6 +333,7 @@ public class ClientProgram {
 			index = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
+			scan.nextLine();
 		}
 		if(index == 0) return;	//exit
 		else if(bookList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
@@ -376,7 +384,7 @@ public class ClientProgram {
 				case 1 : condition = "Excellent";	break;
 				case 2 : condition = "Good";		break;
 				case 3 : condition = "Fair";		break;
-				default : System.out.println("Please choose between 1~3");	break;
+				default : System.out.println("Please choose between 1~3");	scan.nextLine();	break;
 				}
 				break;
 			default:
@@ -396,6 +404,7 @@ public class ClientProgram {
 			index = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type proper number.");
+			scan.nextLine();
 		}
 		if(index == 0) return;	//exit
 		else if(bookList.size() < index) {System.out.println("Inproper index"); return;}	//out of index
@@ -434,6 +443,7 @@ public class ClientProgram {
 			menu = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
+			scan.nextLine();
 			return;
 		}
 		
@@ -473,6 +483,7 @@ public class ClientProgram {
 			menu = scan.nextInt();
 		}catch(Exception e) {
 			System.out.println("Please use proper number to choose menu.");
+			scan.nextLine();
 			return;
 		}
 		
