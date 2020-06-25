@@ -135,6 +135,10 @@ public class ClientProgram {
 		
 		System.out.print("Title : ");
 		title = scan.nextLine();
+		if(title.equals("")) {
+			System.out.println("The title must not be empty");
+			return;
+		};
 		System.out.print("Author (Type enter to skip) : ");
 		author = scan.nextLine();
 		System.out.print("Publisher (Type enter to skip) : ");
