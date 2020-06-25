@@ -180,8 +180,10 @@ public class ClientProgram {
 		String title = null;
 		String author = null;
 		String seller = null;
+		String publisher = null;
 		int ISBN = NULL;
 		int menu = 0;
+		int published_year = 0;
 		String buffer;
 		
 		System.out.println("Keyword for search");
@@ -189,6 +191,8 @@ public class ClientProgram {
 		System.out.println("2. Author");
 		System.out.println("3. ISBN");
 		System.out.println("4. Seller's ID");
+		System.out.println("5. Publisher");
+		System.out.println("6. Published Year");
 		System.out.println("0. Quit");
 		System.out.print("Select : ");
 		
@@ -205,6 +209,8 @@ public class ClientProgram {
 			case 2: author = buffer;	break;
 			case 3: ISBN = Integer.parseInt(buffer);		break;
 			case 4: seller = buffer;	break;
+			case 5: publisher = buffer; break;
+			case 6: published_year = Integer.parseInt(buffer);
 			default:	break;
 			}
 		}catch(Exception e) {
@@ -213,7 +219,7 @@ public class ClientProgram {
 			return;
 		}
 		
-		bookList = Server.search_book(title, ISBN, author, seller);
+		bookList = Server.search_book(title, ISBN, author, seller, publisher, published_year);
 		
 		
 		if(bookList!=null) {

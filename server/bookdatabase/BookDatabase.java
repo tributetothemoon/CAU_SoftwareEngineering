@@ -20,7 +20,7 @@ public class BookDatabase {
 		bookList.add(new Book(title, ISBN, author, publisher, 
 				published_year, price, condition, seller));
 	}
-	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id) {
+	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id, String publisher, int published_year) {
 		ArrayList<Object> result = new ArrayList<>();		
 		
 		if(title != null) {
@@ -34,6 +34,12 @@ public class BookDatabase {
 		}
 		else if(seller_id != null) for(Book book_seller_id : bookList) {
 			if(book_seller_id.seller_id.equals(seller_id)) result.add(book_seller_id);
+		}
+		else if(publisher != null) for(Book book_publisher : bookList) {
+			if(book_publisher.publisher.equals(publisher)) result.add(book_publisher);
+		}
+		else if(published_year != 0) {for(Book book_published_year: bookList)
+			if(book_published_year.published_year == published_year) result.add(book_published_year);
 		}
 		
 		if(result.size() != 0) return result;

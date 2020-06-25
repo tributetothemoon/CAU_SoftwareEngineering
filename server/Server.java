@@ -61,13 +61,13 @@ public class Server {
 		BookDatabase.upload_book(title, ISBN, author, publisher, publication_year, price, state, UserDatabase.get_id((User)seller));
 	}
 	
-	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id) {
-		return BookDatabase.search_book(title, ISBN, author, seller_id);
+	public static ArrayList<Object> search_book(String title, int ISBN, String author, String seller_id, String publisher, int published_year) {
+		return BookDatabase.search_book(title, ISBN, author, seller_id, publisher, published_year);
 	}
 	
 	public static ArrayList<Object> query_book(Object account){
 		String user_id = UserDatabase.get_id((User)account);
-		return BookDatabase.search_book(null, 0, null, user_id);
+		return BookDatabase.search_book(null, 0, null, user_id, null, 0);
 	}
 	public static ArrayList<Object> query_all_book(){return BookDatabase.query_all_book();}
 	
