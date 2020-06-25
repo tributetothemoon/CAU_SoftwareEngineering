@@ -3,9 +3,14 @@ import java.util.ArrayList;
 
 public class BookDatabase {
 	
-	public static ArrayList<Book> bookList;
+	private static ArrayList<Book> bookList;
 	
-	public static void initialize() {bookList = new ArrayList<>();}
+	public static void initialize() {
+		bookList = new ArrayList<>();
+		upload_book("Test Title 1", 20200625, "author_1", "publisher_1", 2020, 10000, "Fair", "test_user");
+		upload_book("Test Title 2", 20200626, "author_2", "publisher_2", 2020, 20000, "Good", "test_user");
+		upload_book("Test Title 3", 20200627, "author_3", "publisher_3", 2020, 30000, "Excellent", "test_user");
+	}
 	public static int get_ISBN(Book book) {return book.ISBN;}
 	public static String get_title(Book book) {return book.title;}
 	public static String get_author(Book book) {return book.author;}

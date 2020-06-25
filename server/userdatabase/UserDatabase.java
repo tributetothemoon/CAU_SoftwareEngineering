@@ -2,8 +2,8 @@ package server.userdatabase;
 import java.util.ArrayList;
 
 public class UserDatabase {
-	static ArrayList<User> userList;
-	static User admin_account;
+	private static ArrayList<User> userList;
+	private static User admin_account;
 	
 	public static String get_id(User account) {return account.id;}
 	public static String get_name(User account) {return account.name;}
@@ -35,7 +35,7 @@ public class UserDatabase {
 		userList = new ArrayList<>();
 		admin_account = new User("admin", "nayana", "administrator", "None", "None");
 		userList.add(admin_account);
-		userList.add(new User("kkm733", "rlans8010", "kimoon", "010-8606-5884", "moon_hf@naver.com"));
+		//userList.add(new User("test_user", "1234", "test_name", "010-0000-0000", "test@cau.ac.kr"));
 	}
 	
 	public static boolean register(String id, String password, String name, String phone, String email) {

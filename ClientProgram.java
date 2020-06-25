@@ -11,8 +11,6 @@ public class ClientProgram {
 	static ArrayList<Object> bookList;
 	static state program_state;
 	
-	public static void clear() {for(int i = 0; i < 50; i++) System.out.println();}
-	
 	public static void login() {
 		scan.nextLine();	//clear buffer
 		
@@ -34,7 +32,8 @@ public class ClientProgram {
 			
 		}catch(Exception e) {
 			System.out.printf("Cannot log in : %s\n", e.getMessage());
-		}		
+		}
+		System.out.println();
 	}
 	
 	public static void logout() {
@@ -70,6 +69,7 @@ public class ClientProgram {
 		}else {
 			System.out.println("Registration failed. Please use another ID.");
 		}
+		System.out.println();
 	}
 	
 	public static void startup_menu() {
@@ -82,6 +82,7 @@ public class ClientProgram {
 		
 		try {
 			menu = scan.nextInt();
+			System.out.println();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number");
 			scan.nextLine();
@@ -106,6 +107,7 @@ public class ClientProgram {
 	public static void print_book_info(Object book) {
 		int temp;
 		System.out.println("Title : " + Server.get_title(book));
+		System.out.println("ISBN : " + Server.get_ISBN(book));
 		System.out.println("Publisher : " + Server.get_publisher(book));
 		System.out.println("Author : " + Server.get_author(book));
 		System.out.print("Published Year : ");
@@ -177,6 +179,7 @@ public class ClientProgram {
 		
 		Server.upload_book(title, ISBN, author, publisher, publication_year, price, condition, account);
 		System.out.println("Book has been uploaded sucessfully.");
+		System.out.println();
 		
 	}
 	
@@ -227,7 +230,7 @@ public class ClientProgram {
 		
 		
 		if(bookList!=null) {
-			System.out.println("[Serching Result]");
+			System.out.println("[Serching Result]\n");
 			int index = 1;
 			for(Object cur : bookList) {
 				System.out.printf("[Index : %d]\n", index++);
@@ -240,6 +243,7 @@ public class ClientProgram {
 			System.out.println("There's no such a book");
 			return;
 		}
+		System.out.println();
 		
 		if(Server.is_admin(account)) {
 			System.out.println("[Administrator Menu]");
@@ -248,6 +252,7 @@ public class ClientProgram {
 			System.out.print("Select : ");
 			try {
 				menu = scan.nextInt();
+				System.out.println();
 			}catch(Exception e) {
 				System.out.println("Please type a proper number.");
 				scan.nextLine();
@@ -309,6 +314,7 @@ public class ClientProgram {
 		int menu = 0;
 		try {
 			menu = scan.nextInt();
+			System.out.println();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
 			scan.nextLine();
@@ -366,6 +372,7 @@ public class ClientProgram {
 		
 		try {
 			System.out.print("Type information to change : ");
+			System.out.println();
 			switch(menu){
 			case 1:
 				title = scan.nextLine();
@@ -438,8 +445,8 @@ public class ClientProgram {
 		}
 		
 		System.out.println("[Menu]");
-		System.out.println("1. Activated user(if deactivated)");
-		System.out.println("2. Deactivated user(if activated)");
+		System.out.println("1. Activate user(if deactivated)");
+		System.out.println("2. Deactivate user(if activated)");
 		System.out.println("3. Delete user and books(if deactivated)");
 		System.out.println("0. Quit");
 		System.out.printf("Select : ");
@@ -507,6 +514,7 @@ public class ClientProgram {
 		default:
 			break;
 		}
+		System.out.println();
 	}
 	
 	public static void user_menu() {
@@ -523,6 +531,7 @@ public class ClientProgram {
 		
 		try {
 			menu = scan.nextInt();
+			System.out.println();
 		}catch(Exception e) {
 			System.out.println("Please type a proper number.");
 			scan.nextLine();
@@ -563,6 +572,7 @@ public class ClientProgram {
 		int menu;
 		try {
 			menu = scan.nextInt();
+			System.out.println();
 		}catch(Exception e) {
 			System.out.println("Please use proper number to choose menu.");
 			scan.nextLine();
